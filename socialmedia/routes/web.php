@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,8 +64,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/admin/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-        Route::post('/admin/users/{user}/block', [AdminController::class, 'blockUser'])->name('admin.users.block');
-        Route::post('/admin/users/{user}/unblock', [AdminController::class, 'unblockUser'])->name('admin.users.unblock');
+        Route::post('/admin/users/{user}/block', [User::class, 'block'])->name('admin.users.block');
+        Route::post('/admin/users/{user}/unblock', [User::class, 'unblock'])->name('admin.users.unblock');
 
         // Trasy związane z zarządzaniem postami przez administratora
         Route::prefix('/admin/posts')->group(function () {

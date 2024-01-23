@@ -12,91 +12,97 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f8f9fa;
+            background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #b7e8eb 100%);
+            overflow: hidden;
+            position: relative;
+            animation: gradientFade 10s infinite alternate linear;
+        }
+
+        .ocean {
+            height: 5%;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #015871;
+        }
+
+        .wave {
+            background: url(https://cdn.kcak11.com/codepen_assets/wave_animation/wave.svg) repeat-x;
+            position: absolute;
+            top: -198px;
+            width: 6400px;
+            height: 198px;
+            animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .circle-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            box-sizing: content-box;
+        }
+
+        .container {
+            z-index: 1;
         }
 
         .auth-container {
-            display: flex;
-            justify-content: space-around;
-            width: 600px;
-            /* Adjust the width as needed */
+            position: relative;
+            z-index: 2;
         }
 
-        .login-container,
-        .register-container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 100%;
-            /* Make both containers take up the full width */
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-1600px);
+            }
         }
 
-        .login-container h2,
-        .register-container h2 {
-            text-align: center;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
+        @keyframes gradientFade {
+            0% {
+                background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #b7e8eb 100%);
+            }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .switch-button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .switch-button:hover {
-            background-color: #218838;
+            100% {
+                background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #b7e8eb 100%, #001F3F 100%);
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <div class="ocean">
+        <div class="wave"></div>
+    </div>
+
     <div class="container">
         <div class="row justify-content-center">
 
-            <!-- Use a common container for both login and register forms -->
-            <div class="col-md-6 auth-container">
+            <div class="col-md-6 mt-5 auth-container">
 
                 <!-- Login Form -->
-                <div class="login-container">
-                    <h2>Login</h2>
+                <div class="login-container bg-light p-3 rounded shadow">
+                    <h2 class="text-primary text-center mb-4">Login</h2>
 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -112,16 +118,17 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                     </form>
 
-                    <p>Nie masz konta? <a href="javascript:void(0);" onclick="toggleRegister()">Zarejestruj się</a></p>
+                    <p class="text-center">Nie masz konta? <a href="#" onclick="toggleRegister()">Zarejestruj się</a>
+                    </p>
                 </div>
 
                 <!-- Register Form -->
-                <div class="register-container" style="display: none;">
-                    <h2>Register</h2>
+                <div class="register-container bg-light p-3 rounded shadow" style="display: none;">
+                    <h2 class="text-success text-center mb-4">Register</h2>
 
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
@@ -148,11 +155,11 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">Register</button>
+                            <button type="submit" class="btn btn-success btn-block">Register</button>
                         </div>
                     </form>
 
-                    <p>Masz już konto? <a href="javascript:void(0);" onclick="toggleRegister()">Zaloguj się tutaj</a>
+                    <p class="text-center">Masz już konto? <a href="#" onclick="toggleRegister()">Zaloguj się tutaj</a>
                     </p>
                 </div>
             </div>
@@ -165,7 +172,39 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <!-- JavaScript for Circle Effect -->
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const circleEffectContainer = document.createElement("div");
+            circleEffectContainer.className = "circle-effect";
+            document.body.appendChild(circleEffectContainer);
+
+            document.addEventListener("mousemove", function (event) {
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
+
+                if (!document.querySelector('.auth-container:hover')) {
+                    const circle = document.createElement("div");
+                    circle.className = "circle";
+                    circle.style.transform = `translate(${mouseX - 7.5}px, ${mouseY - 7.5}px)`;
+                    circleEffectContainer.appendChild(circle);
+
+                    // Triggering reflow to apply styles and start the transition
+                    void circle.offsetWidth;
+
+                    // Adjust opacity and transform after reflow
+                    circle.style.opacity = "0.3";
+                    circle.style.transform = `translate(${mouseX - 7.5}px, ${mouseY - 7.5}px) scale(2)`;
+
+                    // Remove the circle after 0.3s (duration of transition)
+                    setTimeout(() => {
+                        circle.remove();
+                    }, 300);
+                }
+            });
+        });
+
+        // javascript for changing forms
         function toggleRegister() {
             var loginContainer = document.querySelector('.login-container');
             var registerContainer = document.querySelector('.register-container');
@@ -176,8 +215,7 @@
             } else {
                 loginContainer.style.display = 'block';
                 registerContainer.style.display = 'none';
-            }
-        }
+        }  }
     </script>
 
 </body>

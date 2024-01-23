@@ -24,4 +24,8 @@ class AdminPostController extends Controller
 
         return redirect()->route('admin.posts')->with('success', 'Post deleted successfully.');
     }
+    public function updatePost(Post $post)
+    {
+
+    }
 }
