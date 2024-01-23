@@ -67,7 +67,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/admin/users/{user}/unblock', [AdminController::class, 'unblockUser'])->name('admin.users.unblock');
 
         // Trasy związane z zarządzaniem postami przez administratora
-        Route::prefix('admin/posts')->group(function () {
+        Route::prefix('/admin/posts')->group(function () {
             Route::get('', [AdminPostController::class, 'managePosts'])->name('admin.posts');
             Route::get('/{post}/edit', [AdminPostController::class, 'editPost'])->name('admin.posts.edit');
             Route::put('/{post}', [AdminPostController::class, 'updatePost'])->name('admin.posts.update');

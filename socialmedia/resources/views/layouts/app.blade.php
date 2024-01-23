@@ -46,16 +46,16 @@
         </a>
         <div class="d-flex justify-content-end">
             @auth
-            <form method="POST" action="{{ route('logout') }}">
+            <form id="logout-form" method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="btn btn-danger mr-3">Logout</button>
+                <button type="button" class="btn btn-danger mr-3" onclick="confirmLogout()">Wyloguj</button>
             </form>
             @else
             <button type="button" class="btn btn-primary mr-3" onclick="showLoginModal()">
-                Login
+                Zaloguj
             </button>
             <button type="button" class="btn btn-success" onclick="showRegisterModal()">
-                Register
+                Zarejestruj
             </button>
             @endauth
         </div>
@@ -67,8 +67,8 @@
 
     @auth
     <div class="d-flex justify-content-end">
-        <button id="chat-btn" class="btn btn-info mr-2" onclick="showChatModal()">Chat</button>
-        <button id="new-post-btn" class="btn btn-primary" onclick="redirectToNewPost()">New Post</button>
+        <a id="chat-btn" class="btn btn-info mr-2" href="{{ route('chat') }}">Czat</a>
+        <button id="new-post-btn" class="btn btn-primary" onclick="redirectToNewPost()">Nowy Post</button>
     </div>
     @endauth
 
@@ -91,14 +91,14 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="email">E-Mail Address</label>
+                            <label for="email">Adres Email</label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">Hasło</label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary">Zaloguj</button>
                     </form>
                     <p class="mt-2">Nie masz konta? <a href="#" onclick="showRegisterModal()">Zarejestruj się tutaj</a>
                     </p>
@@ -122,22 +122,22 @@
                     <form method="POST" action="{{ route('register') }}" id="register-form">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Nazwa</label>
                             <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">E-Mail Address</label>
+                            <label for="email">Adres Email</label>
                             <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">Hasło</label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="form-group">
-                            <label for="password_confirmation">Confirm Password</label>
+                            <label for="password_confirmation">Powtórz Hasło</label>
                             <input type="password" class="form-control" name="password_confirmation" required>
                         </div>
-                        <button type="submit" class="btn btn-success" id="register-btn">Register</button>
+                        <button type="submit" class="btn btn-success" id="register-btn">Zarejestruj</button>
                     </form>
                     <p class="mt-2">Masz już konto? <a href="#" onclick="showLoginModal()">Zaloguj się tutaj</a></p>
                 </div>
@@ -145,32 +145,16 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#register-form').submit(function (e) {
-                e.preventDefault();
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        // Rejestracja zakończona sukcesem, możesz dodać odpowiednie działania, np. zamknięcie modala
-                        $('#registerModal').modal('hide');
-                        // Dodaj dodatkowe działania po zakończeniu rejestracji
-                    },
-                    error: function (error) {
-                        // Obsługa błędów, możesz dodać odpowiednie działania, np. wyświetlenie komunikatu
-                        console.log(error);
-                        // Dodaj dodatkowe działania w przypadku błędów
-                    }
-                });
-            });
-        });
+        function confirmLogout() {
+            if (confirm("Czy na pewno chcesz się wylogować?")) {
+                document.getElementById('logout-form').submit();
+            }
+        }
 
         function showLoginModal() {
             $('#loginModal').modal('show');
@@ -182,12 +166,6 @@
             $('#registerModal').modal('show');
             $('#loginModal').modal('hide');
             $('#chatModal').modal('hide');
-        }
-
-        function showChatModal() {
-            $('#chatModal').modal('show');
-            $('#loginModal').modal('hide');
-            $('#registerModal').modal('hide');
         }
 
         function redirectToNewPost() {

@@ -10,15 +10,14 @@ class PostController extends Controller
 {
     public function indexForLikedByUser()
     {
-        // Fetch posts where the author is the currently logged-in user
         $user = Auth::user();
         $likedPosts = $user->likedPosts()->latest()->paginate(10);
 
         return view('posts.indexLiked', compact('likedPosts'));
     }
+
     public function indexForCurrentUser()
     {
-        // Fetch posts where the author is the currently logged-in user
         $user = Auth::user();
         $userPosts = $user->posts()->latest()->paginate(10);
 
@@ -47,8 +46,7 @@ class PostController extends Controller
 
         if ($request->has('images')) {
             foreach ($request->file('images') as $image) {
-                $media = $post->addMedia($image);
-                $media->toMediaCollection('images');
+                $post->addMedia($image)->toMediaCollection('images', 'public/media');
             }
         }
 

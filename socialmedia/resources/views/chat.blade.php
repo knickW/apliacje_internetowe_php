@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@yield('chat-scripts')
 <div>
     <h2>Czat</h2>
 
@@ -32,8 +33,9 @@
         <button type="submit">Wyślij</button>
     </form>
 </div>
+@endsection
 
-@section('scripts')
+@section('chat-scripts')
 <script>
     Echo.private(`private-chat.{{ auth()->id() }}`)
         .listen('NewMessage', (event) => {
@@ -42,13 +44,12 @@
             const chatContainer = document.getElementById('chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.innerHTML = `
-                        <p>${event.message.sender.name} to ${event.message.receiver.name}:</p>
-                        <p>${event.message.content}</p>
-                    `;
+                <p>${event.message.sender.name} to ${event.message.receiver.name}:</p>
+                <p>${event.message.content}</p>
+            `;
             chatContainer.appendChild(messageDiv);
 
             chatContainer.scrollTop = chatContainer.scrollHeight;
         });
 </script>
-@endsection
 @endsection

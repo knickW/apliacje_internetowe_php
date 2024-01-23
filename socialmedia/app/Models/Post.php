@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['user_id', 'title', 'content', 'likes_count', 'dislikes_count'];
 

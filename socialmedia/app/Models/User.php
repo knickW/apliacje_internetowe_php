@@ -65,6 +65,13 @@ class User extends Authenticatable
     }
 
     /**
+     * Return if user is blocked
+     */
+    public function isBlocked()
+    {
+        return null;
+    }
+    /**
      * Unblock the user.
      */
     public function unblock()
