@@ -1,5 +1,5 @@
 # Description
-Easy PHP laravel website imitating an social media website.
+Easy PHP laravel app imitating an social media website.
 
 # Features
 - Creating profiles
